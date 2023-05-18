@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class ThumbsUpAction : MonoBehaviour
 {
-    public AudioSource audioSource;
+    private AudioSource audioSource;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     public void OnDetection()
     { Debug.Log("Thumb Pose detected");
         //Fetch the AudioSource from the GameObject
