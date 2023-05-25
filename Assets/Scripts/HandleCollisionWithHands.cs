@@ -9,4 +9,9 @@ public class HandleCollisionWithHands : MonoBehaviour
         Debug.Log("collision");
         Debug.Log(other.gameObject.name);
     }
+
+    public void OnHoverBegin()
+    {
+        Destroy(gameObject);
+    }
 }
