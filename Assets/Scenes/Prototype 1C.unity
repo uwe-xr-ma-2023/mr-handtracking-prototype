@@ -5548,6 +5548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fce76aa16bcbf348a3bda46bbb240e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trailRenderer: {fileID: 1301295620}
 --- !u!114 &1012361211 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3557434566810426996, guid: 15d3b5cf5cea75344a4482323bc124a8, type: 3}
