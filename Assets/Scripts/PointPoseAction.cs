@@ -6,10 +6,11 @@ using PDollarGestureRecognizer;
 
 public class PointPoseAction : MonoBehaviour
 {
-    private AudioSource audioSource;
     public TrailRenderer trailRenderer;
-    private List<Gesture> trainingSet = new List<Gesture>();
     public TMP_Text debugText;
+    private AudioSource audioSource;
+    private List<Gesture> trainingSet = new List<Gesture>();
+    private float debouncePoseEndDuration = 0.1f;
 
     private void Start()
     {
@@ -21,13 +22,24 @@ public class PointPoseAction : MonoBehaviour
             trainingSet.Add(GestureIO.ReadGestureFromXML(gestureXml.text));
     }
     public void OnPoseStart()
-    { 
+    {
+        StopCoroutine(OnPoseEnding());
         audioSource.Play();
         trailRenderer.enabled = true;
     }
 
     public void OnPoseEnd()
     {
+        Debug.Log("OnPoseEnd");
+        StartCoroutine(OnPoseEnding());
+       
+    }
+    // Debounce the pose detector end event as it gets triggered
+    // too easily
+    IEnumerator<WaitForSeconds> OnPoseEnding()
+    {
+        yield return new WaitForSeconds(debouncePoseEndDuration);
+        OnPoseEnding();
         audioSource.Play();
         trailRenderer.enabled = false;
         string gesture = RecogniseGesture();
