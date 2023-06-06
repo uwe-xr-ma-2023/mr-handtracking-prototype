@@ -5759,6 +5759,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trailRenderer: {fileID: 1301295620}
   debugText: {fileID: 1532547779}
+  trainGestures: 0
+  newGestureName: wave
 --- !u!114 &1012361211 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3557434566810426996, guid: 15d3b5cf5cea75344a4482323bc124a8, type: 3}
@@ -6669,7 +6671,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1879372699
 MonoBehaviour:
   m_ObjectHideFlags: 0

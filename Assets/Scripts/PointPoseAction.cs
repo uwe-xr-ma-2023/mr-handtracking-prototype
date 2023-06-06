@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using PDollarGestureRecognizer;
+using System;
 
 
 public class PointPoseAction : MonoBehaviour
@@ -10,14 +11,29 @@ public class PointPoseAction : MonoBehaviour
     public TMP_Text debugText;
     private AudioSource audioSource;
     private List<Gesture> trainingSet = new List<Gesture>();
-    private float debouncePoseEndDuration = 0.1f;
+    private float debouncePoseEndDuration = 0f;
+    public bool trainGestures = true;
+    public string newGestureName;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            OnPoseStart();
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            OnPoseEnd();
+        }
+    }
 
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
         trailRenderer.enabled = false;
 
-        TextAsset[] gesturesXml = Resources.LoadAll<TextAsset>("GestureSet/10-stylus-MEDIUM/");
+        TextAsset[] gesturesXml = Resources.LoadAll<TextAsset>("CustomGestures");
         foreach (TextAsset gestureXml in gesturesXml)
             trainingSet.Add(GestureIO.ReadGestureFromXML(gestureXml.text));
     }
@@ -30,7 +46,6 @@ public class PointPoseAction : MonoBehaviour
 
     public void OnPoseEnd()
     {
-        Debug.Log("OnPoseEnd");
         StartCoroutine(OnPoseEnding());
        
     }
@@ -39,10 +54,18 @@ public class PointPoseAction : MonoBehaviour
     IEnumerator<WaitForSeconds> OnPoseEnding()
     {
         yield return new WaitForSeconds(debouncePoseEndDuration);
-        OnPoseEnding();
+
+        if (trainGestures)
+        {
+            StoreGesture();
+        }
+        else
+        {
+            string gesture = RecogniseGesture();
+        }
+
         audioSource.Play();
         trailRenderer.enabled = false;
-        string gesture = RecogniseGesture();
         trailRenderer.Clear();
     }
 
@@ -78,5 +101,13 @@ public class PointPoseAction : MonoBehaviour
             debugText.text = resultString;
         }
         return gestureResult.Score > 0.8 ? gestureResult.GestureClass : "";
+    }
+
+    void StoreGesture()
+    {
+        List<Point> points = BuildPointsArray();
+        string fileName = $"{Application.persistentDataPath}/{newGestureName}-{DateTime.Now.ToFileTime()}.xml";
+        GestureIO.WriteGesture(points.ToArray(), newGestureName, fileName);
+        trainingSet.Add(new Gesture(points.ToArray(), newGestureName));
     }
 }
