@@ -17,15 +17,15 @@ public class PointPoseAction : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            OnPoseStart();
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    OnPoseStart();
+        //}
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            OnPoseEnd();
-        }
+        //if (Input.GetKeyDown(KeyCode.LeftShift))
+        //{
+        //    OnPoseEnd();
+        //}
     }
 
     private void Start()
@@ -95,7 +95,7 @@ public class PointPoseAction : MonoBehaviour
         Gesture candidate = new Gesture(points.ToArray());
         Result gestureResult = PointCloudRecognizer.Classify(candidate, trainingSet.ToArray());
 
-        string resultString = gestureResult.GestureClass + " " + gestureResult.Score;
+        string resultString = gestureResult.GestureClass + " " + String.Format("{0:P2}", gestureResult.Score) ;
         if (debugText)
         {
             debugText.text = resultString;
