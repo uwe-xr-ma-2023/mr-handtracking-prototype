@@ -57,7 +57,11 @@ public class SceneManagerWp1 : MonoBehaviour
     private void StartWave()
     {
         waveChildCollidedCount = 0;
-        waveGameObject = Instantiate(wavePrefab);
+        float randomX = Random.Range(-0.5f, 0.5f);
+        float randomY = Random.Range(-0.5f, 0.5f);
+        Vector3 randomOffset = new Vector3(randomX, randomY, 0);
+        Vector3 randomPosition = wavePrefab.transform.position + randomOffset;
+        waveGameObject = Instantiate(wavePrefab, randomPosition, wavePrefab.transform.rotation);
         waveChildCount = waveGameObject.transform.childCount;
     }
 }
