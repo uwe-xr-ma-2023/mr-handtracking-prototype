@@ -9,11 +9,13 @@ public class SceneManagerWp1 : MonoBehaviour
     private GameObject waveGameObject;
     private float timeToShowWave = 45.0f;
     private float timeToHideWave = 73.0f;
+    private int waveChildCount;
+    private int waveChildCollidedCount;
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(WaitForShowWave());
-        waveGameObject = Instantiate(wavePrefab);
+        StartWave();
         waveGameObject.SetActive(false);
     }
 
@@ -41,5 +43,21 @@ public class SceneManagerWp1 : MonoBehaviour
         sceneAudio.time = timeToShowWave;
         StopAllCoroutines();
         ShowWave();
+    }
+
+    public void IncreaseWaveChildCollidedCount()
+    {
+        waveChildCollidedCount++;
+        if (waveChildCollidedCount == waveChildCount)
+        {
+            StartWave();
+        }
+    }
+
+    private void StartWave()
+    {
+        waveChildCollidedCount = 0;
+        waveGameObject = Instantiate(wavePrefab);
+        waveChildCount = waveGameObject.transform.childCount;
     }
 }
