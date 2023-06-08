@@ -4,14 +4,26 @@ using UnityEngine;
 
 public class HandleCollisionWithHands : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    private AudioSource audioSource;
+    private Renderer _renderer;
+
+    private void Start()
     {
-        Debug.Log("collision");
-        Debug.Log(other.gameObject.name);
+        audioSource = GetComponent<AudioSource>();
+        _renderer = GetComponent<Renderer>();
     }
 
     public void OnHoverBegin()
     {
+        audioSource.Play();
+        _renderer.enabled = false;
+        StartCoroutine(WaitForAudioEnd());
+        
+    }
+
+    IEnumerator WaitForAudioEnd()
+    {
+        yield return new WaitUntil(() => audioSource.isPlaying == false);
         Destroy(gameObject);
     }
 }
