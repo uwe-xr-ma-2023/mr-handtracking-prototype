@@ -11,21 +11,37 @@ public class WaveHideShow : MonoBehaviour
     void Start()
     {
         waveGameObject.SetActive(false);
-        StartCoroutine(ShowWave());
+        StartCoroutine(WaitForShowWave());
     }
 
     // Update is called once per frame
-    IEnumerator ShowWave()
+    IEnumerator WaitForShowWave()
     {
         yield return new WaitForSeconds(timeToShowWave);
-        waveGameObject.SetActive(true);
-        StartCoroutine(HideWave());
+        ShowWave();
     }
-    IEnumerator HideWave()
+    IEnumerator WaitForHideWave()
     {
         yield return new WaitForSeconds(timeToHideWave - timeToShowWave);
         waveGameObject.SetActive(false);
 
+    }
+
+    private void ShowWave()
+    {
+        waveGameObject.SetActive(true);
+        StartCoroutine(WaitForHideWave());
+    }
+
+    public void SkipToWaveShow()
+    {
+        StopAllCoroutines();
+        ShowWave();
+    }
+
+    public float GetTimeToShowWave()
+    {
+        return timeToShowWave;
     }
 
 }
