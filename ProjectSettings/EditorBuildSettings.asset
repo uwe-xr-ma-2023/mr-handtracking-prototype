@@ -5,12 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/Prototype 0.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/Prototype 1.unity
-    guid: 41830fd9491ef7c4297d2c566ae9c6ff
+    path: Assets/Scenes/Prototype Water.unity
+    guid: 1dd7c63825de62b43af380642033b4cc
   m_configObjects:
     Unity.XR.PICO.LivePreview.Settings: {fileID: 11400000, guid: 988c94f433f68fb448dc2fbb746b1d9e, type: 2}
     Unity.XR.PXR.Settings: {fileID: 11400000, guid: efea8fabd435756408604189aebbeaf9, type: 2}
